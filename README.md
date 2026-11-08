@@ -20,6 +20,38 @@ Web para pescadores de **mar** de toda España, con foco en principiantes. Detec
 
 ---
 
+## Diseño
+
+Basado en el documento de diseño `Diseno_web_pesca.docx` (v1.0, noviembre de 2026).
+- **Colores:** azul profundo `#0B2A43`, azul mar `#1B6CA8`, turquesa `#2BB5B0`, coral `#E8553A` (botones principales y "Comprar"), arena `#F4EFE6` y niebla `#E6EEF3`.
+  - Blanco sobre coral: contraste 3,6:1. Vale **solo para texto grande y en negrita** (botones). No usar coral con texto pequeño.
+  - Blanco sobre turquesa no tiene contraste suficiente: el turquesa se usa solo para detalles decorativos.
+- **Tipografías:** Poppins (títulos) e Inter (texto), **alojadas en la propia web** (`fuentes/`, licencia SIL OFL). Así no se conecta con Google: más rápido, funciona sin cobertura y es mejor para la privacidad.
+- **Navegación móvil:** barra inferior (Inicio, Descubrir, Zona, Mis señuelos, Más) y etiqueta de zona arriba.
+- **Modo oscuro** automático con tonos cálidos.
+- *Pendiente del documento:* barra superior con buscador para escritorio. De momento, en escritorio se muestra la misma barra inferior, centrada.
+
+### Ideas del documento para más adelante (fases 2-3)
+Semáforo de pesca · nivel de confianza de la recomendación · tarjeta para compartir · checklist antes de salir · señuelo del día por zona · glosario y nudos · diario de capturas · mapa de spots · "me funcionó" · alertas · boletín.
+
+---
+
+## Amazon Afiliados y otras tiendas: lo que hay que saber
+
+*Consultado el 08/11/2026 en búsquedas que citan las políticas de Amazon. Hay fuentes contradictorias: **verificar en afiliados.amazon.es antes de usar**.*
+
+- **Imágenes y datos de producto de Amazon:** solo se pueden mostrar si se obtienen de su API oficial (Creators API, que sustituye a la PA-API). Las imágenes no se pueden guardar en la web: solo se enlazan.
+- **Requisito para la API:** según la documentación oficial, **10 ventas cualificadas en los últimos 30 días**. Al empezar no habrá fotos de Amazon.
+- **Precios de Amazon:** deben venir de la API, estar actualizados y llevar la fecha y hora al lado. Las fuentes no coinciden: unas dicen máximo 24 h y otras 1 h. → **Junto a los botones de Amazon no se muestra nuestro `precio_aprox`**, sino "Ver precio en Amazon".
+- **Cuenta nueva:** *PENDIENTE de verificar*. Según lo que recuerdo, Amazon cierra la cuenta si no hay 3 ventas en los primeros 180 días. → Darse de alta poco antes del lanzamiento.
+- **Frase obligatoria en la web:** algo como "En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables". *Copiar el texto exacto del acuerdo de Amazon* (Etapa 9).
+- **Otras tiendas:** redes como Awin o TradeTracker suelen dar catálogos con imágenes que se pueden usar. *PENDIENTE: comprobarlo tienda por tienda.*
+- **Nunca** copiar fotos ni textos de otras webs sin permiso. Sí se pueden usar fotos propias.
+- **Futuro:** cuando haya acceso a la API, una tarea automática gratuita de GitHub (GitHub Actions) puede actualizar fotos y precios a diario sin servidor propio. Las claves irían como secretos y nunca en la web.
+- Las comisiones son ingresos que hay que declarar: consultar con un gestor.
+
+---
+
 ## Qué hay en cada carpeta
 
 | Archivo / carpeta | Para qué sirve |
@@ -32,6 +64,7 @@ Web para pescadores de **mar** de toda España, con foco en principiantes. Detec
 | `manifest.webmanifest` | Ficha de la app: nombre, icono y colores al instalarla en el móvil. |
 | `sw.js` | "Service worker": hace que cargue rápido y se pueda abrir sin cobertura. |
 | `img/` | Iconos de la app. |
+| `fuentes/` | Tipografías Inter y Poppins con sus licencias. |
 | `data/` | (Próximas etapas) señuelos, equipos, montajes, tiendas y normativa en formato JSON. |
 | `.nojekyll` | Archivo vacío que le dice a GitHub Pages que publique los archivos tal cual. |
 
