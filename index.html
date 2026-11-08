@@ -2,28 +2,29 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>LureMatch</title>
-  <meta name="description" content="Te recomendamos el señuelo o equipo de pesca en el mar según tu zona y el estado del mar. Pensado para principiantes.">
-  <meta name="theme-color" content="#0B2A43">
+  <meta name="description" content="Te decimos qué señuelo, equipo y montaje usar en el mar según tu zona y cómo está hoy el mar. Pensado para principiantes.">
+  <meta name="theme-color" content="#04192B">
+  <meta name="color-scheme" content="dark">
   <link rel="icon" type="image/png" href="img/icono-192.png">
   <link rel="apple-touch-icon" href="img/icono-180.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="LureMatch">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preload" href="fuentes/barlow-condensed-900-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fuentes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
   <header class="cabecera">
-    <div class="cabecera__marca">
-      <img class="cabecera__logo" src="img/icono-192.png" alt="" width="32" height="32">
-      <span class="cabecera__nombre">LureMatch</span>
-    </div>
+    <span class="marca">LURE<span class="marca__acento">MATCH</span></span>
     <button id="chip-zona" class="chip-zona" type="button" hidden aria-label="Cambiar zona">
-      <span aria-hidden="true">📍</span> <span id="chip-zona-texto"></span> <span aria-hidden="true">▾</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <span id="chip-zona-texto"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </button>
   </header>
 
@@ -31,80 +32,128 @@
 
     <!-- PANTALLA 1: INICIO -->
     <section id="pantalla-inicio" class="pantalla">
-      <h1 tabindex="-1">Dime dónde pescas y te digo qué usar</h1>
-      <p class="entradilla">Miramos cómo está hoy el mar en tu zona y te decimos qué señuelo, equipo y montaje usar.</p>
-
-      <div class="tarjeta">
-        <p class="tarjeta__texto">
-          <strong>¿Para qué usamos tu ubicación?</strong><br>
-          Solo para saber en qué mar y en qué comunidad estás. Se calcula
-          en tu propio móvil: tu ubicación <strong>no se guarda ni se envía</strong> a ningún servidor nuestro.
-        </p>
-        <button id="btn-ubicacion" class="boton boton--principal" type="button">
-          <span aria-hidden="true">📍</span> Usar mi ubicación
-        </button>
-        <p id="estado-ubicacion" class="estado" role="status" aria-live="polite"></p>
-        <button id="btn-manual" class="boton boton--secundario" type="button">
-          Elegir mi zona a mano
-        </button>
+      <div class="hero hero--inicio">
+        <svg class="hero__fondo" viewBox="0 0 390 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="iCielo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7FB6D9"/><stop offset="0.55" stop-color="#1B6CA8"/><stop offset="1" stop-color="#04192B"/>
+            </linearGradient>
+            <linearGradient id="iOla" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2BB5B0"/><stop offset="1" stop-color="#0B2A43"/>
+            </linearGradient>
+            <linearGradient id="iSenuelo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1F5E3A"/><stop offset="0.45" stop-color="#E9D24A"/><stop offset="1" stop-color="#F7F3E8"/>
+            </linearGradient>
+          </defs>
+          <rect width="390" height="420" fill="url(#iCielo)"/>
+          <path d="M0 110 L40 82 L90 100 L130 66 L170 90 L200 74 L230 94 L260 80 L300 102 L340 72 L390 96 V160 H0 Z" fill="#2B4A5E" opacity="0.7"/>
+          <polygon points="250,0 330,0 230,420 160,420" fill="#FFFFFF" opacity="0.06"/>
+          <polygon points="330,0 370,0 300,420 260,420" fill="#FFFFFF" opacity="0.05"/>
+          <path d="M0 250 C60 200 140 200 200 240 C250 270 300 210 390 220 V420 H0 Z" fill="url(#iOla)"/>
+          <path d="M0 250 C60 200 140 200 200 240 C250 270 300 210 390 220" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+          <path d="M20 280 C90 250 150 260 210 285 S330 265 390 270" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.45"/>
+          <path d="M0 330 C80 300 170 315 240 335 S350 320 390 325 V420 H0 Z" fill="#04192B" opacity="0.9"/>
+          <g fill="#FFFFFF">
+            <circle cx="150" cy="182" r="5"/><circle cx="172" cy="164" r="3.5"/><circle cx="128" cy="170" r="3"/>
+            <circle cx="196" cy="186" r="4"/><circle cx="110" cy="196" r="2.5"/><circle cx="186" cy="150" r="2.5"/>
+            <circle cx="140" cy="148" r="2"/><circle cx="214" cy="172" r="2.5"/><circle cx="96" cy="182" r="2"/>
+            <path d="M100 212 C120 186 150 190 160 206 C175 186 205 188 216 212 Z" opacity="0.92"/>
+          </g>
+          <g transform="translate(150 138) rotate(-14)">
+            <path d="M0 40 C30 6 170 2 220 34 C170 66 30 70 0 40 Z" fill="url(#iSenuelo)"/>
+            <path d="M8 40 C40 26 160 24 210 34" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
+            <circle cx="34" cy="36" r="9" fill="#F4EFE6"/><circle cx="34" cy="36" r="5" fill="#0B0F12"/>
+            <path d="M-14 38 L0 40" stroke="#C9CFD4" stroke-width="3" stroke-linecap="round"/>
+            <path d="M90 62 v12 a7 7 0 0 0 14 0 M90 74 a7 7 0 0 1 -14 0" fill="none" stroke="#C9CFD4" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M170 56 v12 a7 7 0 0 0 14 0 M170 68 a7 7 0 0 1 -14 0" fill="none" stroke="#C9CFD4" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="hero__texto">
+          <span class="etiqueta-inclinada">Pesca en el mar</span>
+          <h1 tabindex="-1">Dime dónde pescas.<br><span class="acento">Te digo qué usar.</span></h1>
+        </div>
       </div>
 
-      <button id="btn-nuevo" class="boton boton--terciario" type="button">
-        <span aria-hidden="true">🎒</span> Soy nuevo, ¿qué compro?
-      </button>
-      <p id="estado-nuevo" class="estado" role="status" aria-live="polite"></p>
+      <div class="acciones">
+        <button id="btn-ubicacion" class="boton boton--principal boton--impacto" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          Usar mi ubicación
+        </button>
+        <p class="nota nota--centro">Solo la usamos para saber en qué mar y comunidad estás. Se calcula en tu móvil: <strong>no se guarda ni se envía</strong> a ningún servidor nuestro.</p>
+        <p id="estado-ubicacion" class="estado" role="status" aria-live="polite"></p>
+        <div class="rejilla-botones">
+          <button id="btn-manual" class="boton boton--secundario" type="button">Zona a mano</button>
+          <button id="btn-nuevo" class="boton boton--turquesa" type="button">Soy nuevo</button>
+        </div>
+        <p id="estado-nuevo" class="estado" role="status" aria-live="polite"></p>
+      </div>
     </section>
 
     <!-- PANTALLA 2: ELEGIR ZONA A MANO -->
     <section id="pantalla-manual" class="pantalla" hidden>
-      <button class="boton-volver" type="button" data-volver="pantalla-inicio">‹ Volver</button>
-      <h2 tabindex="-1">¿Dónde vas a pescar?</h2>
+      <button class="boton-volver" type="button" data-volver="pantalla-inicio" aria-label="Volver">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="antetitulo">Elige tu zona</span>
+      <h2 tabindex="-1">¿Dónde vas<br><span class="acento">a pescar?</span></h2>
 
-      <p class="paso">1. Elige tu comunidad</p>
+      <p class="paso">1 · Tu comunidad</p>
       <div id="lista-comunidades" class="rejilla-botones"></div>
 
       <div id="bloque-localidades" hidden>
-        <p class="paso">2. Elige la zona de costa más cercana</p>
+        <p class="paso">2 · La costa más cercana</p>
         <div id="lista-localidades" class="rejilla-botones"></div>
       </div>
     </section>
 
     <!-- PANTALLA 3: ZONA DETECTADA -->
     <section id="pantalla-zona" class="pantalla" hidden>
-      <button class="boton-volver" type="button" data-volver="pantalla-inicio">‹ Volver</button>
-      <h2 tabindex="-1">Tu zona de pesca</h2>
+      <button class="boton-volver" type="button" data-volver="pantalla-inicio" aria-label="Volver">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="antetitulo">Zona detectada</span>
+      <h2 tabindex="-1">Tu zona<br><span class="acento">de pesca</span></h2>
 
-      <div class="tarjeta tarjeta--zona">
+      <div class="tarjeta">
         <dl class="datos">
-          <div class="datos__fila">
-            <dt>Mar</dt>
-            <dd id="zona-mar"></dd>
-          </div>
-          <div class="datos__fila">
-            <dt>Comunidad</dt>
-            <dd id="zona-comunidad"></dd>
-          </div>
-          <div class="datos__fila">
-            <dt>Costa de referencia</dt>
-            <dd id="zona-referencia"></dd>
-          </div>
+          <div class="datos__fila"><dt>Mar</dt><dd id="zona-mar"></dd></div>
+          <div class="datos__fila"><dt>Comunidad</dt><dd id="zona-comunidad"></dd></div>
+          <div class="datos__fila"><dt>Costa de referencia</dt><dd id="zona-referencia"></dd></div>
         </dl>
         <p id="zona-aviso" class="aviso" hidden></p>
         <p class="nota">La detección es aproximada. Si no es correcta, elige tu zona a mano.</p>
       </div>
 
-      <button id="btn-continuar" class="boton boton--principal" type="button">Continuar</button>
+      <button id="btn-continuar" class="boton boton--principal boton--impacto" type="button">Ver cómo está el mar</button>
       <p id="estado-continuar" class="estado" role="status" aria-live="polite"></p>
       <button id="btn-corregir" class="boton boton--secundario" type="button">No es correcto, elegir a mano</button>
     </section>
 
     <!-- PANTALLA 4: CONDICIONES DEL MAR -->
     <section id="pantalla-condiciones" class="pantalla" hidden>
-      <button class="boton-volver" type="button" data-volver="pantalla-zona">‹ Volver</button>
-      <h2 tabindex="-1">Cómo está el mar ahora</h2>
-      <p id="cond-lugar" class="entradilla"></p>
+      <div class="hero hero--mar">
+        <svg class="hero__fondo" viewBox="0 0 390 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="mCielo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#5E9CC7"/><stop offset="1" stop-color="#04192B"/>
+            </linearGradient>
+          </defs>
+          <rect width="390" height="260" fill="url(#mCielo)"/>
+          <polygon points="230,0 300,0 200,260 140,260" fill="#FFFFFF" opacity="0.06"/>
+          <path d="M0 170 C70 140 140 155 210 175 S330 150 390 160 V260 H0 Z" fill="#0E3A5C"/>
+          <path d="M0 170 C70 140 140 155 210 175 S330 150 390 160" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+          <path d="M0 215 C90 195 170 208 250 222 S350 205 390 212 V260 H0 Z" fill="#04192B"/>
+        </svg>
+        <button class="boton-volver boton-volver--hero" type="button" data-volver="pantalla-zona" aria-label="Volver">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <div class="hero__texto">
+          <span id="cond-lugar" class="antetitulo"></span>
+          <h2 tabindex="-1"><span id="cond-titulo"></span><br><span class="acento">hoy</span></h2>
+        </div>
+      </div>
 
-      <p id="cond-cargando" class="estado" role="status" aria-live="polite">Cargando condiciones del mar…</p>
+      <p id="cond-cargando" class="estado estado--cargando" role="status" aria-live="polite">Leyendo el mar…</p>
 
       <div id="cond-error" class="tarjeta" hidden>
         <p class="estado estado--error">No hemos podido cargar las condiciones. Puede que no haya cobertura.</p>
@@ -112,31 +161,32 @@
         <button id="btn-cond-manual" class="boton boton--secundario" type="button">Ponerlas a mano</button>
       </div>
 
-      <div id="cond-tarjeta" class="tarjeta" hidden>
+      <div id="cond-tarjeta" hidden>
+        <p id="cond-seguridad" class="franja franja--peligro" hidden></p>
+
         <div class="rejilla-datos">
-          <div class="dato">
-            <span class="dato__etiqueta"><span aria-hidden="true">🌡️</span> Agua</span>
+          <div class="dato dato--agua">
+            <span class="dato__etiqueta">Agua</span>
             <span id="dato-temp" class="dato__valor"></span>
             <span id="dato-temp-desc" class="dato__desc"></span>
           </div>
-          <div class="dato">
-            <span class="dato__etiqueta"><span aria-hidden="true">🌊</span> Olas</span>
+          <div class="dato dato--ola">
+            <span class="dato__etiqueta">Olas</span>
             <span id="dato-ola" class="dato__valor"></span>
             <span id="dato-ola-desc" class="dato__desc"></span>
           </div>
-          <div class="dato">
-            <span class="dato__etiqueta"><span aria-hidden="true">💨</span> Viento</span>
+          <div class="dato dato--viento">
+            <span class="dato__etiqueta">Viento</span>
             <span id="dato-viento" class="dato__valor"></span>
             <span id="dato-viento-desc" class="dato__desc"></span>
           </div>
-          <div class="dato">
-            <span class="dato__etiqueta"><span aria-hidden="true">↕️</span> Marea</span>
+          <div class="dato dato--marea">
+            <span class="dato__etiqueta">Marea</span>
             <span id="dato-marea" class="dato__valor"></span>
             <span id="dato-marea-desc" class="dato__desc"></span>
           </div>
         </div>
 
-        <p id="cond-seguridad" class="aviso" hidden></p>
         <p id="cond-corregido" class="aviso" hidden>Has corregido algunos datos a mano.</p>
 
         <p class="nota">
@@ -148,7 +198,7 @@
 
         <button id="btn-editar" class="boton boton--secundario" type="button" aria-expanded="false">Corregir a mano</button>
 
-        <div id="cond-editar" hidden>
+        <div id="cond-editar" class="tarjeta" hidden>
           <div class="stepper" data-campo="temperaturaMar" data-paso="0.5" data-min="5" data-max="32" data-inicial="18">
             <span class="stepper__etiqueta">Temperatura del agua (°C)</span>
             <div class="stepper__controles">
@@ -182,30 +232,31 @@
         </div>
       </div>
 
-      <button id="btn-cond-continuar" class="boton boton--principal" type="button" hidden>Continuar</button>
+      <button id="btn-cond-continuar" class="boton boton--principal boton--impacto" type="button" hidden>Encontrar mi señuelo</button>
       <p id="estado-cond-continuar" class="estado" role="status" aria-live="polite"></p>
     </section>
 
     <!-- PANTALLA: DESCUBRIR (swipe, Etapa 3) -->
     <section id="pantalla-descubrir" class="pantalla" hidden>
-      <h2 tabindex="-1">Descubre señuelos</h2>
+      <span class="antetitulo">Descubrir</span>
+      <h2 tabindex="-1">Tus señuelos<br><span class="acento">de hoy</span></h2>
       <div class="tarjeta tarjeta--vacia">
-        <p class="vacia__icono" aria-hidden="true">🃏</p>
         <p><strong>Próximamente.</strong> Aquí podrás deslizar tarjetas de señuelos elegidos para tu zona y para cómo está hoy el mar.</p>
       </div>
     </section>
 
     <!-- PANTALLA: MIS SEÑUELOS -->
     <section id="pantalla-mis" class="pantalla" hidden>
-      <h2 tabindex="-1">Mis señuelos</h2>
+      <span class="antetitulo">Tu caja</span>
+      <h2 tabindex="-1">Mis<br><span class="acento">señuelos</span></h2>
       <div class="tarjeta tarjeta--vacia">
-        <p class="vacia__icono" aria-hidden="true">🧰</p>
         <p><strong>Próximamente.</strong> Aquí verás los señuelos que ya tienes y los que te interesan.</p>
       </div>
     </section>
 
     <!-- PANTALLA: MÁS -->
     <section id="pantalla-mas" class="pantalla" hidden>
+      <span class="antetitulo">LureMatch</span>
       <h2 tabindex="-1">Más</h2>
       <ul class="lista-menu">
         <li><span>Guía de modalidades</span><span class="pronto">Próximamente</span></li>
@@ -216,10 +267,10 @@
         <li><span>Cookies</span><span class="pronto">Próximamente</span></li>
       </ul>
       <div class="tarjeta">
-        <p class="tarjeta__texto"><strong>LureMatch · versión borrador.</strong> Los datos de señuelos, equipos y normativa están en revisión.</p>
+        <p class="tarjeta__texto"><strong>Versión borrador.</strong> Los datos de señuelos, equipos y normativa están en revisión.</p>
         <p class="nota">
           Condiciones del mar: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a> (CC BY 4.0).
-          Tipografías Inter y Poppins (SIL Open Font License).
+          Tipografías Inter y Barlow Condensed (SIL Open Font License).
         </p>
       </div>
     </section>
@@ -242,7 +293,7 @@
       <span>Descubrir</span>
     </button>
     <button type="button" class="barra-inferior__boton" data-ir="zona">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M12 3a3.5 3.5 0 0 1 3.5 3.5C15.5 9 12 11 12 11S8.5 9 8.5 6.5A3.5 3.5 0 0 1 12 3z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 21c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M12 3a3.5 3.5 0 0 1 3.5 3.5C15.5 9 12 11 12 11S8.5 9 8.5 6.5A3.5 3.5 0 0 1 12 3z"/></svg>
       <span>Zona</span>
     </button>
     <button type="button" class="barra-inferior__boton" data-ir="mis">
@@ -250,7 +301,7 @@
       <span>Mis señuelos</span>
     </button>
     <button type="button" class="barra-inferior__boton" data-ir="mas">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
       <span>Más</span>
     </button>
   </nav>

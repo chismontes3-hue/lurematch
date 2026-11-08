@@ -184,7 +184,9 @@ function formatear(n, decimales) {
 }
 
 function abrirCondiciones() {
-  $("cond-lugar").textContent = estado.zona.punto.n + " · " + ZONAS_MARINAS[estado.zona.zona];
+  // Titular: "L'ESCALA HOY". Quitamos lo que va entre paréntesis para que quepa.
+  $("cond-titulo").textContent = estado.zona.punto.n.replace(/\s*\(.*\)\s*/, "");
+  $("cond-lugar").textContent = ZONAS_MARINAS[estado.zona.zona] + " · " + estado.zona.comunidad;
   mostrarPantalla("pantalla-condiciones");
   pedirCondicionesAPI();
 }
@@ -223,15 +225,15 @@ function pintarCondiciones() {
   var c = estado.condiciones;
   var SIN = "—";
 
-  $("dato-temp").textContent = c.temperaturaMar != null ? formatear(c.temperaturaMar, 1) + " °C" : SIN;
+  ponerValor($("dato-temp"), c.temperaturaMar != null ? formatear(c.temperaturaMar, 1) : SIN, c.temperaturaMar != null ? "°C" : "");
   $("dato-temp-desc").textContent = c.temperaturaMar != null ? "" : "Sin dato";
 
-  $("dato-ola").textContent = c.ola != null ? formatear(c.ola, 1) + " m" : SIN;
+  ponerValor($("dato-ola"), c.ola != null ? formatear(c.ola, 1) : SIN, c.ola != null ? "m" : "");
   var descOla = describirOla(c.ola);
   if (c.periodoOla != null) descOla += " · cada " + Math.round(c.periodoOla) + " s";
   $("dato-ola-desc").textContent = c.ola != null ? descOla : "Sin dato";
 
-  $("dato-viento").textContent = c.viento != null ? Math.round(c.viento) + " km/h" : SIN;
+  ponerValor($("dato-viento"), c.viento != null ? String(Math.round(c.viento)) : SIN, c.viento != null ? "km/h" : "");
   var descViento = describirViento(c.viento);
   if (c.vientoDireccion != null) descViento += " · del " + puntoCardinal(c.vientoDireccion);
   if (c.rachas != null) descViento += " · rachas " + Math.round(c.rachas);
@@ -245,7 +247,7 @@ function pintarCondiciones() {
   if (c.viento != null && c.viento >= 50) avisos.push("viento muy fuerte");
   var seguridad = $("cond-seguridad");
   if (avisos.length) {
-    seguridad.textContent = "⚠️ Precaución: " + avisos.join(" y ") +
+    seguridad.textContent = "Precaución: " + avisos.join(" y ") +
       ". No te acerques a rocas ni escolleras batidas por el mar.";
     seguridad.hidden = false;
   } else {
@@ -259,9 +261,22 @@ function pintarCondiciones() {
   $("btn-cond-continuar").hidden = false;
 }
 
+/* Número grande + unidad pequeña (para que no salte de línea) */
+function ponerValor(elemento, numero, unidad) {
+  elemento.textContent = numero;
+  if (unidad) {
+    var u = document.createElement("span");
+    u.className = "dato__unidad";
+    u.textContent = " " + unidad;
+    elemento.appendChild(u);
+  }
+}
+
 function pintarMarea(m) {
   var valor = $("dato-marea");
   var desc = $("dato-marea-desc");
+  // La marea se muestra con palabras ("Subiendo"): letra algo menor para que quepa
+  valor.classList.add("dato__valor--texto");
   if (!m || !m.estado || m.estado === "nose") {
     valor.textContent = "—";
     desc.textContent = "Sin dato";
