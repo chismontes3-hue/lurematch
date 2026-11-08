@@ -29,7 +29,9 @@ Web para pescadores de **mar** de toda España, con foco en principiantes. Detec
 - **Tipografías:** Barlow Condensed cursiva (titulares, números y botones) e Inter (texto), **alojadas en la propia web** (`fuentes/`, licencia SIL OFL).
 - **Siempre en modo oscuro.** El modo claro del documento se descarta con este estilo. *PENDIENTE: probar la lectura al sol en la orilla.*
 - **Navegación móvil:** barra inferior (Inicio, Descubrir, Zona, Mis señuelos, Más) y etiqueta de zona arriba.
-- **Imágenes:** de momento ilustraciones dibujadas. *PENDIENTE: fotos reales (propias, de bancos de fotos con licencia libre o generadas con IA). Nunca fotos de marcas ni de Amazon.*
+- **Fotos:** reales, de dominio público (CC0) desde Wikimedia Commons, redimensionadas y comprimidas para la web. Autores y enlaces en `img/fotos/CREDITOS.md`. Se pueden cambiar por fotos propias cuando las haya. **Nunca fotos de marcas ni de Amazon.**
+- **Animaciones suaves:** la foto se acerca despacio, los bloques aparecen escalonados y el botón principal tiene un brillo. Se desactivan si el móvil tiene activado "reducir movimiento".
+- **Ordenador:** la foto ocupa todo el ancho, con titulares más grandes y los datos del mar en una fila de 4.
 - *Pendiente del documento:* barra superior con buscador para escritorio.
 
 ### Ideas del documento para más adelante (fases 2-3)
