@@ -22,14 +22,15 @@ Web para pescadores de **mar** de toda España, con foco en principiantes. Detec
 
 ## Diseño
 
-Basado en el documento de diseño `Diseno_web_pesca.docx` (v1.0, noviembre de 2026).
-- **Colores:** azul profundo `#0B2A43`, azul mar `#1B6CA8`, turquesa `#2BB5B0`, coral `#E8553A` (botones principales y "Comprar"), arena `#F4EFE6` y niebla `#E6EEF3`.
-  - Blanco sobre coral: contraste 3,6:1. Vale **solo para texto grande y en negrita** (botones). No usar coral con texto pequeño.
-  - Blanco sobre turquesa no tiene contraste suficiente: el turquesa se usa solo para detalles decorativos.
-- **Tipografías:** Poppins (títulos) e Inter (texto), **alojadas en la propia web** (`fuentes/`, licencia SIL OFL). Así no se conecta con Google: más rápido, funciona sin cobertura y es mejor para la privacidad.
+**Estilo elegido: D · «Impacto»** (8/11/2026), creado en el lienzo de diseño de Claude a partir del documento `Diseno_web_pesca.docx` y de anuncios de señuelos que sirvieron de referencia.
+- **Estética de anuncio:** fondo de mar oscuro, escenas de mar ilustradas (SVG) con ola y espuma, y titulares en mayúsculas y cursiva.
+- **Colores:** fondo `#04192B`, tarjetas `#0B2A43`, azul mar `#1B6CA8`, turquesa `#2BB5B0` (acentos), coral `#E8553A` (acciones principales y "Comprar") y amarillo `#F6C350` (detalles).
+  - Blanco sobre coral: contraste 3,6:1. Vale **solo para texto grande y en negrita**, como los botones.
+- **Tipografías:** Barlow Condensed cursiva (titulares, números y botones) e Inter (texto), **alojadas en la propia web** (`fuentes/`, licencia SIL OFL).
+- **Siempre en modo oscuro.** El modo claro del documento se descarta con este estilo. *PENDIENTE: probar la lectura al sol en la orilla.*
 - **Navegación móvil:** barra inferior (Inicio, Descubrir, Zona, Mis señuelos, Más) y etiqueta de zona arriba.
-- **Modo oscuro** automático con tonos cálidos.
-- *Pendiente del documento:* barra superior con buscador para escritorio. De momento, en escritorio se muestra la misma barra inferior, centrada.
+- **Imágenes:** de momento ilustraciones dibujadas. *PENDIENTE: fotos reales (propias, de bancos de fotos con licencia libre o generadas con IA). Nunca fotos de marcas ni de Amazon.*
+- *Pendiente del documento:* barra superior con buscador para escritorio.
 
 ### Ideas del documento para más adelante (fases 2-3)
 Semáforo de pesca · nivel de confianza de la recomendación · tarjeta para compartir · checklist antes de salir · señuelo del día por zona · glosario y nudos · diario de capturas · mapa de spots · "me funcionó" · alertas · boletín.
@@ -64,7 +65,7 @@ Semáforo de pesca · nivel de confianza de la recomendación · tarjeta para co
 | `manifest.webmanifest` | Ficha de la app: nombre, icono y colores al instalarla en el móvil. |
 | `sw.js` | "Service worker": hace que cargue rápido y se pueda abrir sin cobertura. |
 | `img/` | Iconos de la app. |
-| `fuentes/` | Tipografías Inter y Poppins con sus licencias. |
+| `fuentes/` | Tipografías Inter y Barlow Condensed con sus licencias. |
 | `data/` | (Próximas etapas) señuelos, equipos, montajes, tiendas y normativa en formato JSON. |
 | `.nojekyll` | Archivo vacío que le dice a GitHub Pages que publique los archivos tal cual. |
 
