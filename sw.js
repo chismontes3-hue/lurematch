@@ -8,7 +8,7 @@
    webs (como el tiempo) ni tu ubicación.
    ========================================================= */
 
-var CACHE = "lurematch-v2";
+var CACHE = "lurematch-v3";
 
 var ARCHIVOS_BASE = [
   "./",
@@ -19,6 +19,8 @@ var ARCHIVOS_BASE = [
   "js/condiciones.js",
   "js/app.js",
   "manifest.webmanifest",
+  "fuentes/inter-latin.woff2",
+  "fuentes/poppins-700-latin.woff2",
   "img/icono-192.png",
   "img/icono-512.png"
 ];

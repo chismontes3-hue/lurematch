@@ -15,14 +15,56 @@ var DISTANCIA_AVISO_KM = 25;
 /* ---------- Utilidades ---------- */
 function $(id) { return document.getElementById(id); }
 
+/* Qué botón de la barra inferior se ilumina en cada pantalla */
+var PESTANA_DE_PANTALLA = {
+  "pantalla-inicio": "inicio",
+  "pantalla-manual": "zona",
+  "pantalla-zona": "zona",
+  "pantalla-condiciones": "zona",
+  "pantalla-descubrir": "descubrir",
+  "pantalla-mis": "mis",
+  "pantalla-mas": "mas"
+};
+
 function mostrarPantalla(id) {
   var pantallas = document.querySelectorAll(".pantalla");
   for (var i = 0; i < pantallas.length; i++) {
     pantallas[i].hidden = pantallas[i].id !== id;
   }
+  var pestana = PESTANA_DE_PANTALLA[id];
+  var botones = document.querySelectorAll(".barra-inferior__boton");
+  for (var j = 0; j < botones.length; j++) {
+    if (botones[j].getAttribute("data-ir") === pestana) botones[j].setAttribute("aria-current", "page");
+    else botones[j].removeAttribute("aria-current");
+  }
   window.scrollTo(0, 0);
   var titulo = $(id).querySelector("h1, h2");
-  if (titulo) titulo.focus();
+  if (titulo) titulo.focus({ preventScroll: true });
+}
+
+/* Barra inferior */
+function irA(pestana) {
+  if (pestana === "inicio") return mostrarPantalla("pantalla-inicio");
+  if (pestana === "descubrir") return mostrarPantalla("pantalla-descubrir");
+  if (pestana === "mis") return mostrarPantalla("pantalla-mis");
+  if (pestana === "mas") return mostrarPantalla("pantalla-mas");
+  if (pestana === "zona") {
+    if (!estado.zona) return abrirEleccionManual();
+    if (estado.condiciones) {
+      mostrarPantalla("pantalla-condiciones");
+    } else {
+      abrirCondiciones();
+    }
+  }
+}
+
+/* Etiqueta de zona en la cabecera */
+function actualizarChipZona() {
+  var chip = $("chip-zona");
+  if (!estado.zona) { chip.hidden = true; return; }
+  $("chip-zona-texto").textContent = estado.zona.punto.n;
+  chip.setAttribute("aria-label", "Zona: " + estado.zona.punto.n + ". Toca para cambiarla");
+  chip.hidden = false;
 }
 
 function ponerEstado(elemento, texto, esError) {
@@ -33,6 +75,8 @@ function ponerEstado(elemento, texto, esError) {
 /* ---------- Pantalla: zona detectada ---------- */
 function mostrarZona(resultado) {
   estado.zona = resultado;
+  estado.condiciones = null; // zona nueva: hay que volver a pedir las condiciones
+  actualizarChipZona();
 
   $("zona-mar").textContent = ZONAS_MARINAS[resultado.zona];
   $("zona-comunidad").textContent = resultado.comunidad;
@@ -325,6 +369,19 @@ document.addEventListener("DOMContentLoaded", function () {
   $("btn-corregir").addEventListener("click", abrirEleccionManual);
 
   $("btn-continuar").addEventListener("click", abrirCondiciones);
+  $("chip-zona").addEventListener("click", abrirEleccionManual);
+
+  $("btn-nuevo").addEventListener("click", function () {
+    // Etapa 6: kit para principiantes por presupuesto.
+    ponerEstado($("estado-nuevo"), "Próximamente: te diremos qué kit comprar según tu presupuesto.");
+  });
+
+  var botonesBarra = document.querySelectorAll(".barra-inferior__boton");
+  for (var k = 0; k < botonesBarra.length; k++) {
+    botonesBarra[k].addEventListener("click", function (e) {
+      irA(e.currentTarget.getAttribute("data-ir"));
+    });
+  }
 
   $("btn-reintentar").addEventListener("click", pedirCondicionesAPI);
   $("btn-cond-manual").addEventListener("click", condicionesManuales);

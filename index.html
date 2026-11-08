@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LureMatch</title>
   <meta name="description" content="Te recomendamos el señuelo o equipo de pesca en el mar según tu zona y el estado del mar. Pensado para principiantes.">
-  <meta name="theme-color" content="#0b3d5c">
+  <meta name="theme-color" content="#0B2A43">
   <link rel="icon" type="image/png" href="img/icono-192.png">
   <link rel="apple-touch-icon" href="img/icono-180.png">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,39 +13,46 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="LureMatch">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="preload" href="fuentes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
   <header class="cabecera">
     <div class="cabecera__marca">
-      <span class="cabecera__logo" aria-hidden="true">🎣</span>
+      <img class="cabecera__logo" src="img/icono-192.png" alt="" width="32" height="32">
       <span class="cabecera__nombre">LureMatch</span>
     </div>
-    <span class="etiqueta-borrador">Borrador</span>
+    <button id="chip-zona" class="chip-zona" type="button" hidden aria-label="Cambiar zona">
+      <span aria-hidden="true">📍</span> <span id="chip-zona-texto"></span> <span aria-hidden="true">▾</span>
+    </button>
   </header>
 
   <main class="contenido">
 
     <!-- PANTALLA 1: INICIO -->
     <section id="pantalla-inicio" class="pantalla">
-      <h1 tabindex="-1">¿Qué señuelo uso hoy?</h1>
-      <p class="entradilla">Te decimos qué señuelo o equipo usar según tu zona y cómo está el mar.</p>
+      <h1 tabindex="-1">Dime dónde pescas y te digo qué usar</h1>
+      <p class="entradilla">Miramos cómo está hoy el mar en tu zona y te decimos qué señuelo, equipo y montaje usar.</p>
 
       <div class="tarjeta">
         <p class="tarjeta__texto">
           <strong>¿Para qué usamos tu ubicación?</strong><br>
-          Solo para saber en qué mar y en qué comunidad estás. El cálculo se hace
+          Solo para saber en qué mar y en qué comunidad estás. Se calcula
           en tu propio móvil: tu ubicación <strong>no se guarda ni se envía</strong> a ningún servidor nuestro.
         </p>
         <button id="btn-ubicacion" class="boton boton--principal" type="button">
           <span aria-hidden="true">📍</span> Usar mi ubicación
         </button>
         <p id="estado-ubicacion" class="estado" role="status" aria-live="polite"></p>
+        <button id="btn-manual" class="boton boton--secundario" type="button">
+          Elegir mi zona a mano
+        </button>
       </div>
 
-      <button id="btn-manual" class="boton boton--secundario" type="button">
-        Elegir mi zona a mano
+      <button id="btn-nuevo" class="boton boton--terciario" type="button">
+        <span aria-hidden="true">🎒</span> Soy nuevo, ¿qué compro?
       </button>
+      <p id="estado-nuevo" class="estado" role="status" aria-live="polite"></p>
     </section>
 
     <!-- PANTALLA 2: ELEGIR ZONA A MANO -->
@@ -179,12 +186,74 @@
       <p id="estado-cond-continuar" class="estado" role="status" aria-live="polite"></p>
     </section>
 
+    <!-- PANTALLA: DESCUBRIR (swipe, Etapa 3) -->
+    <section id="pantalla-descubrir" class="pantalla" hidden>
+      <h2 tabindex="-1">Descubre señuelos</h2>
+      <div class="tarjeta tarjeta--vacia">
+        <p class="vacia__icono" aria-hidden="true">🃏</p>
+        <p><strong>Próximamente.</strong> Aquí podrás deslizar tarjetas de señuelos elegidos para tu zona y para cómo está hoy el mar.</p>
+      </div>
+    </section>
+
+    <!-- PANTALLA: MIS SEÑUELOS -->
+    <section id="pantalla-mis" class="pantalla" hidden>
+      <h2 tabindex="-1">Mis señuelos</h2>
+      <div class="tarjeta tarjeta--vacia">
+        <p class="vacia__icono" aria-hidden="true">🧰</p>
+        <p><strong>Próximamente.</strong> Aquí verás los señuelos que ya tienes y los que te interesan.</p>
+      </div>
+    </section>
+
+    <!-- PANTALLA: MÁS -->
+    <section id="pantalla-mas" class="pantalla" hidden>
+      <h2 tabindex="-1">Más</h2>
+      <ul class="lista-menu">
+        <li><span>Guía de modalidades</span><span class="pronto">Próximamente</span></li>
+        <li><span>Glosario para principiantes</span><span class="pronto">Próximamente</span></li>
+        <li><span>¿Puedo pescar esto aquí?</span><span class="pronto">Próximamente</span></li>
+        <li><span>Aviso legal</span><span class="pronto">Próximamente</span></li>
+        <li><span>Privacidad</span><span class="pronto">Próximamente</span></li>
+        <li><span>Cookies</span><span class="pronto">Próximamente</span></li>
+      </ul>
+      <div class="tarjeta">
+        <p class="tarjeta__texto"><strong>LureMatch · versión borrador.</strong> Los datos de señuelos, equipos y normativa están en revisión.</p>
+        <p class="nota">
+          Condiciones del mar: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a> (CC BY 4.0).
+          Tipografías Inter y Poppins (SIL Open Font License).
+        </p>
+      </div>
+    </section>
+
   </main>
 
   <footer class="pie">
     <p>LureMatch · versión borrador</p>
     <p>Tu ubicación no se guarda ni se envía a ningún servidor propio.</p>
   </footer>
+
+  <!-- BARRA INFERIOR (móvil) -->
+  <nav class="barra-inferior" aria-label="Navegación principal">
+    <button type="button" class="barra-inferior__boton" data-ir="inicio" aria-current="page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+      <span>Inicio</span>
+    </button>
+    <button type="button" class="barra-inferior__boton" data-ir="descubrir">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="17" rx="2"/><path d="M3 7v11M21 7v11"/></svg>
+      <span>Descubrir</span>
+    </button>
+    <button type="button" class="barra-inferior__boton" data-ir="zona">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M12 3a3.5 3.5 0 0 1 3.5 3.5C15.5 9 12 11 12 11S8.5 9 8.5 6.5A3.5 3.5 0 0 1 12 3z"/></svg>
+      <span>Zona</span>
+    </button>
+    <button type="button" class="barra-inferior__boton" data-ir="mis">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM8 8V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3M3 13h18"/></svg>
+      <span>Mis señuelos</span>
+    </button>
+    <button type="button" class="barra-inferior__boton" data-ir="mas">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+      <span>Más</span>
+    </button>
+  </nav>
 
   <script src="js/zonas.js"></script>
   <script src="js/ubicacion.js"></script>
