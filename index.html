@@ -33,41 +33,10 @@
     <!-- PANTALLA 1: INICIO -->
     <section id="pantalla-inicio" class="pantalla">
       <div class="hero hero--inicio">
-        <svg class="hero__fondo" viewBox="0 0 390 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="iCielo" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#7FB6D9"/><stop offset="0.55" stop-color="#1B6CA8"/><stop offset="1" stop-color="#04192B"/>
-            </linearGradient>
-            <linearGradient id="iOla" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#2BB5B0"/><stop offset="1" stop-color="#0B2A43"/>
-            </linearGradient>
-            <linearGradient id="iSenuelo" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#1F5E3A"/><stop offset="0.45" stop-color="#E9D24A"/><stop offset="1" stop-color="#F7F3E8"/>
-            </linearGradient>
-          </defs>
-          <rect width="390" height="420" fill="url(#iCielo)"/>
-          <path d="M0 110 L40 82 L90 100 L130 66 L170 90 L200 74 L230 94 L260 80 L300 102 L340 72 L390 96 V160 H0 Z" fill="#2B4A5E" opacity="0.7"/>
-          <polygon points="250,0 330,0 230,420 160,420" fill="#FFFFFF" opacity="0.06"/>
-          <polygon points="330,0 370,0 300,420 260,420" fill="#FFFFFF" opacity="0.05"/>
-          <path d="M0 250 C60 200 140 200 200 240 C250 270 300 210 390 220 V420 H0 Z" fill="url(#iOla)"/>
-          <path d="M0 250 C60 200 140 200 200 240 C250 270 300 210 390 220" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
-          <path d="M20 280 C90 250 150 260 210 285 S330 265 390 270" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.45"/>
-          <path d="M0 330 C80 300 170 315 240 335 S350 320 390 325 V420 H0 Z" fill="#04192B" opacity="0.9"/>
-          <g fill="#FFFFFF">
-            <circle cx="150" cy="182" r="5"/><circle cx="172" cy="164" r="3.5"/><circle cx="128" cy="170" r="3"/>
-            <circle cx="196" cy="186" r="4"/><circle cx="110" cy="196" r="2.5"/><circle cx="186" cy="150" r="2.5"/>
-            <circle cx="140" cy="148" r="2"/><circle cx="214" cy="172" r="2.5"/><circle cx="96" cy="182" r="2"/>
-            <path d="M100 212 C120 186 150 190 160 206 C175 186 205 188 216 212 Z" opacity="0.92"/>
-          </g>
-          <g transform="translate(150 138) rotate(-14)">
-            <path d="M0 40 C30 6 170 2 220 34 C170 66 30 70 0 40 Z" fill="url(#iSenuelo)"/>
-            <path d="M8 40 C40 26 160 24 210 34" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
-            <circle cx="34" cy="36" r="9" fill="#F4EFE6"/><circle cx="34" cy="36" r="5" fill="#0B0F12"/>
-            <path d="M-14 38 L0 40" stroke="#C9CFD4" stroke-width="3" stroke-linecap="round"/>
-            <path d="M90 62 v12 a7 7 0 0 0 14 0 M90 74 a7 7 0 0 1 -14 0" fill="none" stroke="#C9CFD4" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M170 56 v12 a7 7 0 0 0 14 0 M170 68 a7 7 0 0 1 -14 0" fill="none" stroke="#C9CFD4" stroke-width="2.5" stroke-linecap="round"/>
-          </g>
-        </svg>
+        <img class="hero__foto" src="img/fotos/olas-1200.jpg"
+             srcset="img/fotos/olas-1200.jpg 1200w, img/fotos/olas-2000.jpg 2000w"
+             sizes="100vw" alt="" width="1200" height="675" fetchpriority="high">
+        <div class="hero__velo" aria-hidden="true"></div>
         <div class="hero__texto">
           <span class="etiqueta-inclinada">Pesca en el mar</span>
           <h1 tabindex="-1">Dime dónde pescas.<br><span class="acento">Te digo qué usar.</span></h1>
@@ -132,18 +101,10 @@
     <!-- PANTALLA 4: CONDICIONES DEL MAR -->
     <section id="pantalla-condiciones" class="pantalla" hidden>
       <div class="hero hero--mar">
-        <svg class="hero__fondo" viewBox="0 0 390 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="mCielo" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#5E9CC7"/><stop offset="1" stop-color="#04192B"/>
-            </linearGradient>
-          </defs>
-          <rect width="390" height="260" fill="url(#mCielo)"/>
-          <polygon points="230,0 300,0 200,260 140,260" fill="#FFFFFF" opacity="0.06"/>
-          <path d="M0 170 C70 140 140 155 210 175 S330 150 390 160 V260 H0 Z" fill="#0E3A5C"/>
-          <path d="M0 170 C70 140 140 155 210 175 S330 150 390 160" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
-          <path d="M0 215 C90 195 170 208 250 222 S350 205 390 212 V260 H0 Z" fill="#04192B"/>
-        </svg>
+        <img class="hero__foto" src="img/fotos/espuma-1200.jpg"
+             srcset="img/fotos/espuma-1200.jpg 1200w, img/fotos/espuma-2000.jpg 2000w"
+             sizes="100vw" alt="" width="1200" height="800" loading="lazy">
+        <div class="hero__velo" aria-hidden="true"></div>
         <button class="boton-volver boton-volver--hero" type="button" data-volver="pantalla-zona" aria-label="Volver">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
@@ -240,7 +201,8 @@
     <section id="pantalla-descubrir" class="pantalla" hidden>
       <span class="antetitulo">Descubrir</span>
       <h2 tabindex="-1">Tus señuelos<br><span class="acento">de hoy</span></h2>
-      <div class="tarjeta tarjeta--vacia">
+      <div class="tarjeta tarjeta--vacia tarjeta--foto">
+        <img src="img/fotos/senuelos-900.jpg" alt="Varios señuelos de vinilo de colores" width="900" height="585" loading="lazy">
         <p><strong>Próximamente.</strong> Aquí podrás deslizar tarjetas de señuelos elegidos para tu zona y para cómo está hoy el mar.</p>
       </div>
     </section>
@@ -249,7 +211,8 @@
     <section id="pantalla-mis" class="pantalla" hidden>
       <span class="antetitulo">Tu caja</span>
       <h2 tabindex="-1">Mis<br><span class="acento">señuelos</span></h2>
-      <div class="tarjeta tarjeta--vacia">
+      <div class="tarjeta tarjeta--vacia tarjeta--foto">
+        <img src="img/fotos/senuelos-900.jpg" alt="Varios señuelos de vinilo de colores" width="900" height="585" loading="lazy">
         <p><strong>Próximamente.</strong> Aquí verás los señuelos que ya tienes y los que te interesan.</p>
       </div>
     </section>
@@ -271,6 +234,7 @@
         <p class="nota">
           Condiciones del mar: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a> (CC BY 4.0).
           Tipografías Inter y Barlow Condensed (SIL Open Font License).
+          Fotos de dominio público (CC0) vía Wikimedia Commons: dimitrisvetsikas1969, Tim Marshall y Danndorfer1914.
         </p>
       </div>
     </section>

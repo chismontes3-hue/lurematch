@@ -8,7 +8,7 @@
    webs (como el tiempo) ni tu ubicación.
    ========================================================= */
 
-var CACHE = "lurematch-v4";
+var CACHE = "lurematch-v5";
 
 var ARCHIVOS_BASE = [
   "./",
@@ -23,6 +23,8 @@ var ARCHIVOS_BASE = [
   "fuentes/barlow-condensed-800-italic-latin.woff2",
   "fuentes/barlow-condensed-900-italic-latin.woff2",
   "img/icono-192.png",
+  "img/fotos/olas-1200.jpg",
+  "img/fotos/espuma-1200.jpg",
   "img/icono-512.png"
 ];
 

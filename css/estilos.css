@@ -173,31 +173,47 @@ h1:focus, h2:focus { outline: none; }
   padding: 16px 16px 24px;
 }
 
-/* ---------- Héroe con escena de mar ---------- */
+/* ---------- Héroe con foto de mar (a todo lo ancho) ---------- */
+body { overflow-x: clip; } /* evita desplazamiento lateral sin romper la cabecera fija */
 .hero {
   position: relative;
-  margin: -16px -16px 0;
+  margin-top: -16px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  background: var(--superficie);
 }
-.hero__fondo {
+.hero__foto {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: 60% 50%;
+  animation: acercar 18s ease-out both;
+}
+/* Velo oscuro de abajo a arriba para que el texto se lea siempre */
+.hero__velo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4,25,43,0.15) 0%, rgba(4,25,43,0.25) 40%, rgba(4,25,43,0.85) 78%, #04192B 100%);
 }
 .hero__texto {
   position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
   padding: 0 20px 18px;
 }
 .hero__texto h1,
 .hero__texto h2 { text-shadow: 0 3px 14px rgba(4, 25, 43, 0.65); margin-bottom: 0; }
 .hero__texto .antetitulo { color: #DCEAF5; text-shadow: 0 2px 8px rgba(4, 25, 43, 0.6); }
 
-.hero--inicio { min-height: 440px; }
-.hero--mar { min-height: 250px; margin-bottom: 14px; }
+.hero--inicio { min-height: 470px; }
+.hero--mar { min-height: 270px; margin-bottom: 14px; }
 .hero--mar h2 { font-size: 60px; }
 
 .acciones { padding-top: 14px; }
@@ -214,6 +230,9 @@ h1:focus, h2:focus { outline: none; }
 .tarjeta--vacia { text-align: center; padding: 26px 20px; color: var(--texto-suave); }
 .tarjeta--vacia p { margin: 0; }
 .tarjeta--vacia strong { color: var(--texto); }
+.tarjeta--foto { padding: 0; overflow: hidden; }
+.tarjeta--foto img { display: block; width: 100%; height: 200px; object-fit: cover; }
+.tarjeta--foto p { padding: 18px 20px 22px; }
 
 .datos { margin: 0; }
 .datos__fila {
@@ -564,7 +583,46 @@ h1:focus, h2:focus { outline: none; }
   .barra-inferior__boton { font-size: 10px; }
 }
 
-/* Escritorio: contenido y barra centrados */
+/* ---------- Animaciones suaves ---------- */
+@keyframes acercar { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes subir { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* Al mostrar una pantalla, sus bloques aparecen escalonados */
+.pantalla:not([hidden]) > *,
+.pantalla:not([hidden]) .hero__texto > *,
+#cond-tarjeta:not([hidden]) .dato {
+  animation: subir 0.5s cubic-bezier(.2,.7,.2,1) both;
+}
+.pantalla:not([hidden]) .hero__texto > :nth-child(2) { animation-delay: 0.08s; }
+.pantalla:not([hidden]) > :nth-child(2) { animation-delay: 0.12s; }
+.pantalla:not([hidden]) > :nth-child(3) { animation-delay: 0.18s; }
+.pantalla:not([hidden]) > :nth-child(4) { animation-delay: 0.24s; }
+#cond-tarjeta:not([hidden]) .dato:nth-child(2) { animation-delay: 0.06s; }
+#cond-tarjeta:not([hidden]) .dato:nth-child(3) { animation-delay: 0.12s; }
+#cond-tarjeta:not([hidden]) .dato:nth-child(4) { animation-delay: 0.18s; }
+
+.boton--principal { position: relative; overflow: hidden; }
+.boton--principal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: brillo 4.5s ease-in-out 1.2s infinite;
+}
+@keyframes brillo { 0%, 70% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+@media (hover: hover) {
+  .boton:hover { filter: brightness(1.08); }
+  .boton-opcion:hover { border-color: var(--borde-fuerte); }
+}
+
+/* Quien prefiere menos movimiento (ajuste del móvil), sin animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Escritorio ---------- */
 @media (min-width: 700px) {
   .barra-inferior {
     left: 50%;
@@ -575,5 +633,22 @@ h1:focus, h2:focus { outline: none; }
     border-bottom: 0;
     border-radius: 18px 18px 0 0;
   }
-  .hero { border-radius: 0 0 24px 24px; }
+  .cabecera { padding-left: max(24px, calc(50% - 540px)); padding-right: max(24px, calc(50% - 540px)); }
+  .contenido { padding-left: 24px; padding-right: 24px; }
+  .hero { margin-top: -16px; }
+  .contenido:has(#pantalla-inicio:not([hidden])) { max-width: 1080px; }
+  .acciones { max-width: 520px; }
+  .hero--inicio { min-height: 500px; }
+  .hero--inicio .hero__texto { max-width: 1080px; padding: 0 24px 40px; }
+  .hero--inicio h1 { font-size: 92px; }
+  .hero--mar { min-height: 380px; }
+  .hero--mar .hero__texto { max-width: 1080px; padding: 0 24px 28px; }
+  .hero--mar h2 { font-size: 88px; }
+  .boton-volver--hero { left: max(24px, calc(50% - 540px)); top: 20px; }
+  .rejilla-datos { gap: 14px; }
+}
+@media (min-width: 1000px) {
+  /* En pantallas grandes, los datos del mar en una fila de 4 */
+  .contenido:has(#pantalla-condiciones:not([hidden])) { max-width: 1080px; }
+  .rejilla-datos { grid-template-columns: repeat(4, 1fr); }
 }
