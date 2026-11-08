@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SeñueloMatch</title>
+  <meta name="description" content="Te recomendamos el señuelo o equipo de pesca en el mar según tu zona y el estado del mar. Pensado para principiantes.">
+  <meta name="theme-color" content="#0b3d5c">
+  <link rel="icon" type="image/png" href="img/icono-192.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SeñueloMatch">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="cabecera">
+    <div class="cabecera__marca">
+      <span class="cabecera__logo" aria-hidden="true">🎣</span>
+      <span class="cabecera__nombre">SeñueloMatch</span>
+    </div>
+    <span class="etiqueta-borrador">Borrador</span>
+  </header>
+
+  <main class="contenido">
+
+    <!-- PANTALLA 1: INICIO -->
+    <section id="pantalla-inicio" class="pantalla">
+      <h1 tabindex="-1">¿Qué señuelo uso hoy?</h1>
+      <p class="entradilla">Te decimos qué señuelo o equipo usar según tu zona y cómo está el mar.</p>
+
+      <div class="tarjeta">
+        <p class="tarjeta__texto">
+          <strong>¿Para qué usamos tu ubicación?</strong><br>
+          Solo para saber en qué mar y en qué comunidad estás. El cálculo se hace
+          en tu propio móvil: tu ubicación <strong>no se guarda ni se envía</strong> a ningún servidor nuestro.
+        </p>
+        <button id="btn-ubicacion" class="boton boton--principal" type="button">
+          <span aria-hidden="true">📍</span> Usar mi ubicación
+        </button>
+        <p id="estado-ubicacion" class="estado" role="status" aria-live="polite"></p>
+      </div>
+
+      <button id="btn-manual" class="boton boton--secundario" type="button">
+        Elegir mi zona a mano
+      </button>
+    </section>
+
+    <!-- PANTALLA 2: ELEGIR ZONA A MANO -->
+    <section id="pantalla-manual" class="pantalla" hidden>
+      <button class="boton-volver" type="button" data-volver="pantalla-inicio">‹ Volver</button>
+      <h2 tabindex="-1">¿Dónde vas a pescar?</h2>
+
+      <p class="paso">1. Elige tu comunidad</p>
+      <div id="lista-comunidades" class="rejilla-botones"></div>
+
+      <div id="bloque-localidades" hidden>
+        <p class="paso">2. Elige la zona de costa más cercana</p>
+        <div id="lista-localidades" class="rejilla-botones"></div>
+      </div>
+    </section>
+
+    <!-- PANTALLA 3: ZONA DETECTADA -->
+    <section id="pantalla-zona" class="pantalla" hidden>
+      <button class="boton-volver" type="button" data-volver="pantalla-inicio">‹ Volver</button>
+      <h2 tabindex="-1">Tu zona de pesca</h2>
+
+      <div class="tarjeta tarjeta--zona">
+        <dl class="datos">
+          <div class="datos__fila">
+            <dt>Mar</dt>
+            <dd id="zona-mar"></dd>
+          </div>
+          <div class="datos__fila">
+            <dt>Comunidad</dt>
+            <dd id="zona-comunidad"></dd>
+          </div>
+          <div class="datos__fila">
+            <dt>Costa de referencia</dt>
+            <dd id="zona-referencia"></dd>
+          </div>
+        </dl>
+        <p id="zona-aviso" class="aviso" hidden></p>
+        <p class="nota">La detección es aproximada. Si no es correcta, elige tu zona a mano.</p>
+      </div>
+
+      <button id="btn-continuar" class="boton boton--principal" type="button">Continuar</button>
+      <p id="estado-continuar" class="estado" role="status" aria-live="polite"></p>
+      <button id="btn-corregir" class="boton boton--secundario" type="button">No es correcto, elegir a mano</button>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>SeñueloMatch · versión borrador</p>
+    <p>Tu ubicación no se guarda ni se envía a ningún servidor propio.</p>
+  </footer>
+
+  <script src="js/zonas.js"></script>
+  <script src="js/ubicacion.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
