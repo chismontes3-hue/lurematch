@@ -1,4 +1,4 @@
-# SeñueloMatch (nombre provisional)
+# LureMatch
 
 Web para pescadores de **mar** de toda España, con foco en principiantes. Detecta o te deja elegir tu zona y, con las condiciones actuales del mar, te recomienda señuelo, equipo y montaje, y te lleva directo a comprarlo. Se puede añadir a la pantalla de inicio del móvil como una app.
 
@@ -58,7 +58,7 @@ Solo funciona con la web ya publicada (https):
 
 El "service worker" (`sw.js`) carga siempre la versión más nueva si hay internet. Sin cobertura, abre la última versión guardada. Solo guarda los archivos de la propia web, nunca tu ubicación.
 
-> Si cambias archivos importantes, sube el número de `CACHE` en `sw.js` (por ejemplo `senuelomatch-v2`) para limpiar lo guardado en los móviles.
+> Si cambias archivos importantes, sube el número de `CACHE` en `sw.js` (por ejemplo `lurematch-v2`) para limpiar lo guardado en los móviles.
 
 ---
 
@@ -80,11 +80,11 @@ Git guarda el historial de cambios y sube los archivos a GitHub.
 
 ### Paso 2: crear una cuenta en GitHub (una sola vez)
 1. Entra en https://github.com y pulsa **Sign up**.
-2. Elige un nombre de usuario. Será parte de la dirección de tu web: `https://TU-USUARIO.github.io/senuelomatch/`.
+2. Elige un nombre de usuario. Será parte de la dirección de tu web: `https://TU-USUARIO.github.io/lurematch/`.
 
 ### Paso 3: crear el repositorio (la "carpeta" en GitHub)
 1. Ya con la sesión iniciada, pulsa el **+** de arriba a la derecha → **New repository**.
-2. En *Repository name* escribe `senuelomatch`.
+2. En *Repository name* escribe `lurematch`.
 3. Marca **Public**. GitHub Pages gratis necesita que sea público.
 4. **No** marques "Add a README" (ya tenemos uno).
 5. Pulsa **Create repository**.
@@ -92,7 +92,7 @@ Git guarda el historial de cambios y sube los archivos a GitHub.
 ### Paso 4: subir los archivos
 Claude ejecutará los comandos por ti. Si lo haces tú, abre PowerShell en la carpeta del proyecto y escribe:
 ```
-git remote add origin https://github.com/TU-USUARIO/senuelomatch.git
+git remote add origin https://github.com/TU-USUARIO/lurematch.git
 git push -u origin main
 ```
 La primera vez se abrirá una ventana para iniciar sesión en GitHub.

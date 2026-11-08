@@ -8,7 +8,7 @@
    webs (como el tiempo) ni tu ubicación.
    ========================================================= */
 
-var CACHE = "senuelomatch-v1";
+var CACHE = "lurematch-v1";
 
 var ARCHIVOS_BASE = [
   "./",

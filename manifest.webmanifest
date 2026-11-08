@@ -1,6 +1,6 @@
 {
-  "name": "SeñueloMatch",
-  "short_name": "SeñueloMatch",
+  "name": "LureMatch",
+  "short_name": "LureMatch",
   "description": "El señuelo y el equipo adecuados según tu zona y el estado del mar.",
   "lang": "es",
   "start_url": "./",
