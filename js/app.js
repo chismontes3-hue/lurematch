@@ -5,7 +5,8 @@
 /* Lo que sabemos de la zona elegida. Solo vive en memoria:
    al cerrar o recargar la página, se borra. */
 var estado = {
-  zona: null // { punto, zona, comunidad, distanciaKm, origen }
+  zona: null,        // { punto, zona, comunidad, distanciaKm, origen }
+  condiciones: null  // ver js/condiciones.js
 };
 
 /* Si estás a más de esta distancia de la costa, te avisamos */
@@ -133,6 +134,181 @@ function alPulsarUbicacion() {
   });
 }
 
+/* ---------- Pantalla: condiciones del mar ---------- */
+function formatear(n, decimales) {
+  return n.toLocaleString("es-ES", { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
+}
+
+function abrirCondiciones() {
+  $("cond-lugar").textContent = estado.zona.punto.n + " · " + ZONAS_MARINAS[estado.zona.zona];
+  mostrarPantalla("pantalla-condiciones");
+  pedirCondicionesAPI();
+}
+
+function pedirCondicionesAPI() {
+  $("cond-cargando").hidden = false;
+  $("cond-error").hidden = true;
+  $("cond-tarjeta").hidden = true;
+  $("btn-cond-continuar").hidden = true;
+
+  cargarCondiciones(estado.zona.punto)
+    .then(function (c) {
+      estado.condiciones = c;
+      $("cond-cargando").hidden = true;
+      pintarCondiciones();
+    })
+    .catch(function () {
+      $("cond-cargando").hidden = true;
+      $("cond-error").hidden = false;
+    });
+}
+
+/* Sin datos de internet: empezamos con valores de ejemplo que el usuario ajusta */
+function condicionesManuales() {
+  estado.condiciones = {
+    temperaturaMar: null, ola: null, periodoOla: null,
+    viento: null, vientoDireccion: null, rachas: null,
+    marea: null, hora: null, corregido: true
+  };
+  $("cond-error").hidden = true;
+  pintarCondiciones();
+  abrirEditor(true);
+}
+
+function pintarCondiciones() {
+  var c = estado.condiciones;
+  var SIN = "—";
+
+  $("dato-temp").textContent = c.temperaturaMar != null ? formatear(c.temperaturaMar, 1) + " °C" : SIN;
+  $("dato-temp-desc").textContent = c.temperaturaMar != null ? "" : "Sin dato";
+
+  $("dato-ola").textContent = c.ola != null ? formatear(c.ola, 1) + " m" : SIN;
+  var descOla = describirOla(c.ola);
+  if (c.periodoOla != null) descOla += " · cada " + Math.round(c.periodoOla) + " s";
+  $("dato-ola-desc").textContent = c.ola != null ? descOla : "Sin dato";
+
+  $("dato-viento").textContent = c.viento != null ? Math.round(c.viento) + " km/h" : SIN;
+  var descViento = describirViento(c.viento);
+  if (c.vientoDireccion != null) descViento += " · del " + puntoCardinal(c.vientoDireccion);
+  if (c.rachas != null) descViento += " · rachas " + Math.round(c.rachas);
+  $("dato-viento-desc").textContent = c.viento != null ? descViento : "Sin dato";
+
+  pintarMarea(c.marea);
+
+  // Avisos de seguridad
+  var avisos = [];
+  if (c.ola != null && c.ola > 2.5) avisos.push("mar gruesa");
+  if (c.viento != null && c.viento >= 50) avisos.push("viento muy fuerte");
+  var seguridad = $("cond-seguridad");
+  if (avisos.length) {
+    seguridad.textContent = "⚠️ Precaución: " + avisos.join(" y ") +
+      ". No te acerques a rocas ni escolleras batidas por el mar.";
+    seguridad.hidden = false;
+  } else {
+    seguridad.hidden = true;
+  }
+
+  $("cond-corregido").hidden = !c.corregido;
+  $("cond-hora").textContent = c.hora ? "Actualizado a las " + c.hora.slice(11, 16) + " (hora local)." : "";
+
+  $("cond-tarjeta").hidden = false;
+  $("btn-cond-continuar").hidden = false;
+}
+
+function pintarMarea(m) {
+  var valor = $("dato-marea");
+  var desc = $("dato-marea-desc");
+  if (!m || !m.estado || m.estado === "nose") {
+    valor.textContent = "—";
+    desc.textContent = "Sin dato";
+    return;
+  }
+  // Marea casi inapreciable (típico del Mediterráneo): las horas no aportan nada
+  if (m.rango != null && m.rango < 0.3) {
+    valor.textContent = "Muy pequeña";
+    desc.textContent = "Solo " + Math.round(m.rango * 100) + " cm de diferencia en 24 h";
+    return;
+  }
+
+  var nombres = { subiendo: "Subiendo", bajando: "Bajando", parada: "Parada" };
+  valor.textContent = nombres[m.estado] || "—";
+
+  var partes = [];
+  if (m.pleamar) partes.push("Pleamar ~" + m.pleamar);
+  if (m.bajamar) partes.push("Bajamar ~" + m.bajamar);
+  desc.textContent = partes.join(" · ");
+}
+
+/* ---------- Corregir a mano ---------- */
+function abrirEditor(abrir) {
+  var editor = $("cond-editar");
+  editor.hidden = !abrir;
+  $("btn-editar").setAttribute("aria-expanded", abrir ? "true" : "false");
+  $("btn-editar").textContent = abrir ? "Listo" : "Corregir a mano";
+  if (abrir) {
+    pintarSteppers();
+    pintarOpcionesMarea();
+  }
+}
+
+function pintarSteppers() {
+  var steppers = document.querySelectorAll(".stepper");
+  for (var i = 0; i < steppers.length; i++) {
+    var s = steppers[i];
+    var campo = s.getAttribute("data-campo");
+    var v = estado.condiciones[campo];
+    var paso = parseFloat(s.getAttribute("data-paso"));
+    var decimales = paso < 1 ? 1 : 0;
+    s.querySelector(".stepper__valor").textContent = v != null ? formatear(v, decimales) : "—";
+  }
+}
+
+function alPulsarStepper(e) {
+  var boton = e.target.closest(".stepper__boton");
+  if (!boton) return;
+  var s = boton.closest(".stepper");
+  var campo = s.getAttribute("data-campo");
+  var paso = parseFloat(s.getAttribute("data-paso"));
+  var min = parseFloat(s.getAttribute("data-min"));
+  var max = parseFloat(s.getAttribute("data-max"));
+  var actual = estado.condiciones[campo];
+
+  var nuevo;
+  if (actual == null) {
+    nuevo = parseFloat(s.getAttribute("data-inicial"));
+  } else {
+    nuevo = actual + paso * parseInt(boton.getAttribute("data-delta"), 10);
+  }
+  nuevo = Math.round(Math.min(max, Math.max(min, nuevo)) * 10) / 10;
+
+  estado.condiciones[campo] = nuevo;
+  estado.condiciones.corregido = true;
+  // Si corriges las olas a mano, el periodo de la API ya no cuadra
+  if (campo === "ola") estado.condiciones.periodoOla = null;
+  // Si corriges el viento, la dirección y las rachas de la API ya no cuadran
+  if (campo === "viento") { estado.condiciones.vientoDireccion = null; estado.condiciones.rachas = null; }
+
+  pintarSteppers();
+  pintarCondiciones();
+}
+
+function pintarOpcionesMarea() {
+  var actual = estado.condiciones.marea ? estado.condiciones.marea.estado : null;
+  var botones = document.querySelectorAll("#marea-opciones .boton-opcion");
+  for (var i = 0; i < botones.length; i++) {
+    botones[i].setAttribute("aria-pressed", botones[i].getAttribute("data-marea") === actual ? "true" : "false");
+  }
+}
+
+function alPulsarMarea(e) {
+  var boton = e.target.closest(".boton-opcion");
+  if (!boton) return;
+  estado.condiciones.marea = { estado: boton.getAttribute("data-marea"), pleamar: null, bajamar: null, rango: null };
+  estado.condiciones.corregido = true;
+  pintarOpcionesMarea();
+  pintarCondiciones();
+}
+
 /* ---------- App instalable (solo en https) ---------- */
 if ("serviceWorker" in navigator && location.protocol === "https:") {
   window.addEventListener("load", function () {
@@ -148,9 +324,19 @@ document.addEventListener("DOMContentLoaded", function () {
   $("btn-manual").addEventListener("click", abrirEleccionManual);
   $("btn-corregir").addEventListener("click", abrirEleccionManual);
 
-  $("btn-continuar").addEventListener("click", function () {
-    // Etapa 2: aquí cargaremos las condiciones del mar.
-    ponerEstado($("estado-continuar"), "Siguiente paso (condiciones del mar): en construcción.");
+  $("btn-continuar").addEventListener("click", abrirCondiciones);
+
+  $("btn-reintentar").addEventListener("click", pedirCondicionesAPI);
+  $("btn-cond-manual").addEventListener("click", condicionesManuales);
+  $("btn-editar").addEventListener("click", function () {
+    abrirEditor($("cond-editar").hidden);
+  });
+  $("cond-editar").addEventListener("click", alPulsarStepper);
+  $("marea-opciones").addEventListener("click", alPulsarMarea);
+
+  $("btn-cond-continuar").addEventListener("click", function () {
+    // Etapa 3: aquí empezará el selector de modalidad.
+    ponerEstado($("estado-cond-continuar"), "Siguiente paso (modalidad y señuelos): en construcción.");
   });
 
   var botonesVolver = document.querySelectorAll("[data-volver]");

@@ -91,6 +91,94 @@
       <button id="btn-corregir" class="boton boton--secundario" type="button">No es correcto, elegir a mano</button>
     </section>
 
+    <!-- PANTALLA 4: CONDICIONES DEL MAR -->
+    <section id="pantalla-condiciones" class="pantalla" hidden>
+      <button class="boton-volver" type="button" data-volver="pantalla-zona">‹ Volver</button>
+      <h2 tabindex="-1">Cómo está el mar ahora</h2>
+      <p id="cond-lugar" class="entradilla"></p>
+
+      <p id="cond-cargando" class="estado" role="status" aria-live="polite">Cargando condiciones del mar…</p>
+
+      <div id="cond-error" class="tarjeta" hidden>
+        <p class="estado estado--error">No hemos podido cargar las condiciones. Puede que no haya cobertura.</p>
+        <button id="btn-reintentar" class="boton boton--principal" type="button">Reintentar</button>
+        <button id="btn-cond-manual" class="boton boton--secundario" type="button">Ponerlas a mano</button>
+      </div>
+
+      <div id="cond-tarjeta" class="tarjeta" hidden>
+        <div class="rejilla-datos">
+          <div class="dato">
+            <span class="dato__etiqueta"><span aria-hidden="true">🌡️</span> Agua</span>
+            <span id="dato-temp" class="dato__valor"></span>
+            <span id="dato-temp-desc" class="dato__desc"></span>
+          </div>
+          <div class="dato">
+            <span class="dato__etiqueta"><span aria-hidden="true">🌊</span> Olas</span>
+            <span id="dato-ola" class="dato__valor"></span>
+            <span id="dato-ola-desc" class="dato__desc"></span>
+          </div>
+          <div class="dato">
+            <span class="dato__etiqueta"><span aria-hidden="true">💨</span> Viento</span>
+            <span id="dato-viento" class="dato__valor"></span>
+            <span id="dato-viento-desc" class="dato__desc"></span>
+          </div>
+          <div class="dato">
+            <span class="dato__etiqueta"><span aria-hidden="true">↕️</span> Marea</span>
+            <span id="dato-marea" class="dato__valor"></span>
+            <span id="dato-marea-desc" class="dato__desc"></span>
+          </div>
+        </div>
+
+        <p id="cond-seguridad" class="aviso" hidden></p>
+        <p id="cond-corregido" class="aviso" hidden>Has corregido algunos datos a mano.</p>
+
+        <p class="nota">
+          <span id="cond-hora"></span>
+          Datos de un modelo: orientativos y no aptos para navegación.
+          Fuente: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a>
+          (<a href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>).
+        </p>
+
+        <button id="btn-editar" class="boton boton--secundario" type="button" aria-expanded="false">Corregir a mano</button>
+
+        <div id="cond-editar" hidden>
+          <div class="stepper" data-campo="temperaturaMar" data-paso="0.5" data-min="5" data-max="32" data-inicial="18">
+            <span class="stepper__etiqueta">Temperatura del agua (°C)</span>
+            <div class="stepper__controles">
+              <button type="button" class="stepper__boton" data-delta="-1" aria-label="Bajar temperatura">−</button>
+              <span class="stepper__valor" aria-live="polite"></span>
+              <button type="button" class="stepper__boton" data-delta="1" aria-label="Subir temperatura">+</button>
+            </div>
+          </div>
+          <div class="stepper" data-campo="ola" data-paso="0.1" data-min="0" data-max="6" data-inicial="0.5">
+            <span class="stepper__etiqueta">Altura de ola (m)</span>
+            <div class="stepper__controles">
+              <button type="button" class="stepper__boton" data-delta="-1" aria-label="Bajar altura de ola">−</button>
+              <span class="stepper__valor" aria-live="polite"></span>
+              <button type="button" class="stepper__boton" data-delta="1" aria-label="Subir altura de ola">+</button>
+            </div>
+          </div>
+          <div class="stepper" data-campo="viento" data-paso="5" data-min="0" data-max="100" data-inicial="10">
+            <span class="stepper__etiqueta">Viento (km/h)</span>
+            <div class="stepper__controles">
+              <button type="button" class="stepper__boton" data-delta="-1" aria-label="Bajar viento">−</button>
+              <span class="stepper__valor" aria-live="polite"></span>
+              <button type="button" class="stepper__boton" data-delta="1" aria-label="Subir viento">+</button>
+            </div>
+          </div>
+          <p class="stepper__etiqueta">Marea</p>
+          <div class="rejilla-botones rejilla-botones--3" id="marea-opciones">
+            <button type="button" class="boton-opcion" data-marea="subiendo" aria-pressed="false">Subiendo</button>
+            <button type="button" class="boton-opcion" data-marea="bajando" aria-pressed="false">Bajando</button>
+            <button type="button" class="boton-opcion" data-marea="nose" aria-pressed="false">No lo sé</button>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-cond-continuar" class="boton boton--principal" type="button" hidden>Continuar</button>
+      <p id="estado-cond-continuar" class="estado" role="status" aria-live="polite"></p>
+    </section>
+
   </main>
 
   <footer class="pie">
@@ -100,6 +188,7 @@
 
   <script src="js/zonas.js"></script>
   <script src="js/ubicacion.js"></script>
+  <script src="js/condiciones.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
